@@ -1,9 +1,10 @@
 // Popup controller. Loaded as a classic script after signatures.js + detect.js,
-// so window.STACK_SIGNATURES and window.detectStack are available.
-
-const { SIGNATURES } = window.STACK_SIGNATURES;
+// so window.STACK_SIGNATURES and window.detectStack are available. Wrapped in an
+// IIFE so its top-level names don't collide with signatures.js's globals (which
+// also defines SIGNATURES/CAT in the shared global scope of classic scripts).
+(function () {
 const ALL_GLOBALS = Array.from(
-  new Set(SIGNATURES.flatMap((s) => s.global || []))
+  new Set(window.STACK_SIGNATURES.SIGNATURES.flatMap((s) => s.global || []))
 );
 
 const metaEl = document.getElementById("meta");
@@ -244,3 +245,4 @@ document.getElementById("exportCsv").addEventListener("click", () => {
 });
 
 run();
+})();

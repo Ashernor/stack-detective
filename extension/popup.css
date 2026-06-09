@@ -54,6 +54,7 @@ body {
 .meta .badge.mode { margin-left: 6px; }
 
 .toolbar { display: flex; gap: 8px; margin: 12px 0 4px; }
+.toolbar[hidden] { display: none; }
 .toolbar button {
   background: var(--panel-2);
   border: 1px solid var(--border);
