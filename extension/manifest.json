@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Stack Detective",
+  "version": "1.0.0",
+  "description": "Detect search, discovery & personalization vendors (Algolia, Constructor, Bloomreach…) on the page you're viewing — and spot where Attraqt is running.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Stack Detective — analyze this page"
+  }
+}

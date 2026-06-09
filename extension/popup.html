@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="head">
+      <div class="title">Stack Detective<span class="dot">.</span></div>
+      <button id="rescan" class="rescan" title="Re-scan">↻</button>
+    </div>
+    <div id="meta" class="meta"></div>
+    <div id="toolbar" class="toolbar" hidden>
+      <button id="exportJson">Export JSON</button>
+      <button id="exportCsv">Export CSV</button>
+    </div>
+    <div id="results"></div>
+
+    <script src="signatures.js"></script>
+    <script src="detect.js"></script>
+    <script src="popup.js"></script>
+  </body>
+</html>
