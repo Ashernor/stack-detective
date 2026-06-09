@@ -1,12 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const EXAMPLES = [
-  "gymshark.com",
-  "react.dev",
-  "vuejs.org",
+// Customer list (name + domain to analyze).
+const CUSTOMERS = [
+  { name: "Asos", url: "asos.com" },
+  { name: "Adidas", url: "adidas.com" },
+  { name: "JD Sports", url: "jdsports.co.uk" },
+  { name: "Kingfisher", url: "kingfisher.com" },
+  { name: "PVH", url: "pvh.com" },
+  { name: "ITX", url: "inditex.com" },
+  { name: "Auchan", url: "auchan.fr" },
+  { name: "Chanel", url: "chanel.com" },
+  { name: "New Look", url: "newlook.com" },
+  { name: "Hermes", url: "hermes.com" },
+  { name: "Puma", url: "puma.com" },
+  { name: "Selfridges", url: "selfridges.com" },
+  { name: "Boulanger", url: "boulanger.com" },
+  { name: "Norauto", url: "norauto.fr" },
+  { name: "H&M (COS)", url: "cosstores.com" },
+  { name: "River Island", url: "riverisland.com" },
+  { name: "Burberry", url: "burberry.com" },
+  { name: "BSH", url: "bsh-group.com" },
+  { name: "AO.COM", url: "ao.com" },
+  { name: "Swarovski", url: "swarovski.com" },
+  { name: "Dr Martens", url: "drmartens.com" },
+  { name: "La Fourchette", url: "thefork.com" },
+  { name: "M&S", url: "marksandspencer.com" },
+  { name: "DeBijenkorf", url: "debijenkorf.nl" },
+  { name: "Gucci", url: "gucci.com" },
+  { name: "Armani", url: "armani.com" },
 ];
+
+// Random 5–8 from the list. Deterministic default for the initial (SSR) render
+// to avoid a hydration mismatch; randomized client-side in an effect.
+function sampleCustomers() {
+  const count = 5 + Math.floor(Math.random() * 4); // 5..8
+  return [...CUSTOMERS].sort(() => Math.random() - 0.5).slice(0, count);
+}
 
 function hostnameFor(result) {
   try {
@@ -67,6 +98,13 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState(null);
+  const [sample, setSample] = useState(() => CUSTOMERS.slice(0, 6));
+  const [showAll, setShowAll] = useState(false);
+
+  // Randomize the visible customers on the client (avoids SSR hydration drift).
+  useEffect(() => {
+    setSample(sampleCustomers());
+  }, []);
 
   async function run(target) {
     const value = (target ?? url).trim();
@@ -133,12 +171,21 @@ export default function Home() {
       </form>
 
       <div className="examples">
-        Try:
-        {EXAMPLES.map((ex) => (
-          <button key={ex} onClick={() => run(ex)} disabled={loading}>
-            {ex}
+        <span className="examples-label">
+          {showAll ? "All customers:" : "Try a customer:"}
+        </span>
+        {(showAll ? CUSTOMERS : sample).map((c) => (
+          <button key={c.name} onClick={() => run(c.url)} disabled={loading}>
+            {c.name}
           </button>
         ))}
+        <button
+          className="examples-toggle"
+          onClick={() => setShowAll((v) => !v)}
+          disabled={loading}
+        >
+          {showAll ? "Show fewer" : "Show all customers →"}
+        </button>
       </div>
 
       {error ? <div className="error">{error}</div> : null}

@@ -213,7 +213,16 @@ button.go:disabled { opacity: 0.55; cursor: default; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.examples { margin-top: 12px; font-size: 13px; color: var(--muted); }
+.examples {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.examples-label { margin-right: 2px; }
 .examples button {
   background: var(--panel-2);
   border: 1px solid var(--border);
@@ -222,6 +231,17 @@ button.go:disabled { opacity: 0.55; cursor: default; }
   padding: 4px 12px;
   font-size: 12px;
   cursor: pointer;
-  margin: 0 6px 6px 0;
 }
 .examples button:hover { border-color: var(--accent); }
+.examples button:disabled { opacity: 0.5; cursor: default; }
+.examples button.examples-toggle {
+  background: transparent;
+  border-color: transparent;
+  color: var(--accent);
+  font-weight: 600;
+  padding-left: 4px;
+}
+.examples button.examples-toggle:hover {
+  border-color: transparent;
+  text-decoration: underline;
+}
