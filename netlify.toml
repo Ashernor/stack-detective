@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next.js 16 + Playwright require a modern Node runtime.
+  NODE_VERSION = "20"
+
+# The Next.js runtime for Netlify generates the serverless functions.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Bundle the serverless Chromium binary (@sparticuz/chromium ships brotli-packed
+# binaries under bin/) into the function that runs the /api/analyze route, and
+# keep the browser packages external so they aren't mangled by the bundler.
+[functions]
+  node_bundler = "esbuild"
+  included_files = ["node_modules/@sparticuz/chromium/bin/**"]
+  external_node_modules = ["@sparticuz/chromium", "playwright-core"]
