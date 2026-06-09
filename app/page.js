@@ -99,8 +99,11 @@ export default function Home() {
     run();
   }
 
-  const competitors = result?.detections.filter((d) => d.competitor) ?? [];
-  const others = result?.detections.filter((d) => !d.competitor) ?? [];
+  const mine = result?.detections.filter((d) => d.self) ?? [];
+  const competitors =
+    result?.detections.filter((d) => d.competitor && !d.self) ?? [];
+  const others =
+    result?.detections.filter((d) => !d.competitor && !d.self) ?? [];
 
   return (
     <div className="wrap">
@@ -173,8 +176,23 @@ export default function Home() {
           {result.detections.length === 0 ? (
             <div className="empty">
               No known vendors detected. The site may use a custom/in-house
-              stack, or block headless browsers.
+              stack, or — especially on a hosted deployment — its bot protection
+              may be blocking the request. Check the HTTP status and the notice
+              above.
             </div>
+          ) : null}
+
+          {mine.length > 0 ? (
+            <>
+              <div className="section-title">
+                Your stack — Attraqt ({mine.length})
+              </div>
+              <div className="cards">
+                {mine.map((d) => (
+                  <DetectionCard key={d.id} d={d} />
+                ))}
+              </div>
+            </>
           ) : null}
 
           {competitors.length > 0 ? (
@@ -218,9 +236,10 @@ export default function Home() {
 
 function DetectionCard({ d }) {
   return (
-    <div className={"card" + (d.competitor ? " competitor" : "")}>
+    <div className={"card" + (d.self ? " self" : d.competitor ? " competitor" : "")}>
       <div className="card-head">
         <span className="name">{d.name}</span>
+        {d.self ? <span className="badge self">your product</span> : null}
         {d.competitor ? <span className="badge comp">competitor</span> : null}
         <span className="badge cat">{d.category}</span>
         <span className={"badge " + d.confidence}>{d.confidence} confidence</span>

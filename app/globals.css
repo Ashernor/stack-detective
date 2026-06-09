@@ -141,6 +141,7 @@ button.go:disabled { opacity: 0.55; cursor: default; }
   padding: 16px 18px;
 }
 .card.competitor { border-color: rgba(183, 148, 246, 0.5); }
+.card.self { border-color: rgba(52, 211, 153, 0.6); background: rgba(52, 211, 153, 0.04); }
 
 .card-head {
   display: flex;
@@ -161,6 +162,7 @@ button.go:disabled { opacity: 0.55; cursor: default; }
   letter-spacing: 0.04em;
 }
 .badge.comp { background: rgba(183,148,246,0.18); color: var(--accent-2); }
+.badge.self { background: var(--ok); color: #04231a; }
 .badge.cat { background: var(--panel-2); color: var(--muted); }
 .badge.high { background: rgba(52,211,153,0.16); color: var(--ok); }
 .badge.low { background: rgba(240,180,41,0.16); color: var(--warn); }
